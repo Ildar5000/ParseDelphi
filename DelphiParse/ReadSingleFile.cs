@@ -11,15 +11,22 @@ namespace DelphiParse
     {
         ProcessCode processCode =new ProcessCode();
 
-        public void ReadFile(string path)
+        public void ReadFile(string path, int option)
         {
             using (StreamReader fileStream = new StreamReader(path))
             {
                 string line=fileStream.ReadToEnd();
-                processCode.DeleteComment(line);
-                WriteFile(@"outputwithouttxt.pas");
-
-
+                
+                if (option==0)
+                {
+                    processCode.DeleteComment(line);
+                    WriteFile(@"outputwithouttxt.pas");
+                }
+                
+                if (option==1)
+                {
+                    processCode.ProcessMainComponents();
+                }
             }
 
 
