@@ -24,7 +24,16 @@ namespace ParseDelphiCode
         
         public static string UsesValue = "uses";
 
+        public static string TypesValue = "type";
 
+        public static string ClassValue = "class";
+        public static string PublicValue = "public ";
+        public static string PrivateValue = "private ";
+
+        public static string DoublePoint = ":";
+
+        public static string EndValue = "end";
+        public static string EqualsValue = "=";
 
         public static int MultiOperation(string symbold)
         {

@@ -130,11 +130,30 @@ namespace ParseDelphiCode
                         object_com.Push(keyToken);
                         comment.Push("uses");
                         break;
-                    }
+                    case "type":
+                        keyToken = new TypeTokenOperation(line);
+                        object_com.Push(keyToken);
+                        comment.Push("type");
+                        break;
+                }
 
                 }
 
                 tokenOperations.Add(keyToken);
+        }
+
+        private string FindEnd(string[] str)
+        {
+            foreach (var w in str)
+            {
+                string s = w.ToLower().Trim();
+                if (s.Equals(KeyWords.EndValue))
+                {
+                    return s;
+                }
+            }
+
+            return "";
         }
 
 
@@ -164,8 +183,9 @@ namespace ParseDelphiCode
             else
             {
                 IKeyToken token= (IKeyToken)object_com.Peek();
+                string key=MultiOperationFactory.QuestionEndValue(token);
 
-                if (KeyWords.MultiOperation(symbol) == 2)
+                if (KeyWords.MultiOperation(symbol) == 2&&key.Equals(KeyWords.EndOperator))
                 {
                     foreach (string op in operation)
                     {
@@ -175,8 +195,19 @@ namespace ParseDelphiCode
                         MultiOperationFactory.AddValueAndEnd(token, oper);
                     }
                     object_com.Pop();
+                    
                 }
-                
+                else
+                {
+                    MultiOperationFactory.AddValue(token, operation);
+                }
+
+                if (FindEnd(operation)==KeyWords.EndValue)
+                {
+                    object_com.Pop();
+                }
+
+
                 if (KeyWords.EnumeratorOperator(symbol)==1)
                 {
                     MultiOperationFactory.AddValue(token, operation);

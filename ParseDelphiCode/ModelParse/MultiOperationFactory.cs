@@ -10,6 +10,17 @@ namespace ParseDelphiCode.ModelParse
     public static class MultiOperationFactory
     {
 
+        public static string QuestionEndValue(IKeyToken keyToken)
+        {
+            Type myType = keyToken.GetType();
+            if (myType.Name == "TypeTokenOperation")
+            {
+                return KeyWords.EndValue;
+            }
+
+            return KeyWords.EndOperator;
+        }
+
         public static void AddValue(IKeyToken keyToken,string[] value)
         {
             if (keyToken == null)
@@ -22,6 +33,12 @@ namespace ParseDelphiCode.ModelParse
                 UsesTokenOperation usesTokenOperation = (UsesTokenOperation)keyToken;
                 usesTokenOperation.Add(value);
 
+            }
+
+            if (myType.Name== "TypeTokenOperation")
+            {
+                TypeTokenOperation usesTokenOperation = (TypeTokenOperation)keyToken;
+                usesTokenOperation.Add(value);
             }
 
 
